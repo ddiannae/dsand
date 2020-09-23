@@ -12,6 +12,10 @@ g2 <- graph.formula(1-2, 1-3, 2-3, 2-4, 3-5, 4-5,
 ### La función que usan en el github
 g <- graph_from_literal(1-2, 1-3, 2-3, 2-4, 3-5, 4-5, 
                         4-6, 4-7, 5-6, 6-7)
+
+g3 <- graph_from_literal(1-2, 1-3, 2-3, 2-4, 3-5, 4-5, 
+                        4-6, 4-7, 5-6, 6-7)
+
 V(g)
 E(g)
 
