@@ -173,3 +173,42 @@ print_all(proj[[1]])
 print_all(proj[[2]])
 plot(g.bip, layout= layout.bipartite(g.bip))
 
+### Ejemplo de: 
+### http://www.kateto.net/wp-content/uploads/2015/06/Polnet%202015%20Network%20Viz%20Tutorial%20-%20Ognyanova.pdf
+
+
+nodes2 <- read.csv("data/Dataset2-Media-User-Example-NODES.csv", header=T, as.is=T)
+links2 <- read.csv("data/Dataset2-Media-User-Example-EDGES.csv", header=T, row.names=1)
+head(nodes2)
+head(links2)
+links2 <- as.matrix(links2)
+dim(links2)
+dim(nodes2)
+
+net2 <- graph.incidence(links2)
+table(E(net2)$type)
+## ¿¿ De dónde salió el type??
+## Lo pone la función graph.incidence
+## nueva versión: graph_from_incidence_matrix
+
+plot(net2, vertex.label=NA)
+vertex_attr_names(net2)
+
+V(net2)$color <- c("steel blue", "orange")[V(net2)$type+1]
+V(net2)$shape <- c("square", "circle")[V(net2)$type+1]
+V(net2)$label <- ""
+V(net2)$label[V(net2)$type==F] <- nodes2$media[V(net2)$type==F]
+V(net2)$label.cex=.4
+V(net2)$label.font=2
+
+vertex_attr_names(net2)
+plot(net2, vertex.label.color="white", vertex.size=(2-V(net2)$type)*8)
+
+plot(net2, vertex.shape="none", vertex.label=nodes2$media,
+     vertex.label.color=V(net2)$color, vertex.label.font=2,
+     vertex.label.cex=.6, edge.color="gray70", edge.width=2)
+
+print_all(net2, v=T)
+proj2 <- bipartite_projection(net2)
+plot(proj2[[1]])
+plot(proj2[[2]], layout = layout.lgl)
